@@ -1,0 +1,53 @@
+module SHA256Node(ain,bin,cin,din,ein,fin,gin,hin,aout,bout,cout,dout,eout,fout,gout,hout,k,w);
+input [31:0]ain;
+input [31:0]bin;
+input [31:0]cin;
+input [31:0]din;
+input [31:0]ein;
+input [31:0]fin;
+input [31:0]gin;
+input [31:0]hin;
+input [31:0]k;
+input [31:0]w;
+output [31:0]aout;
+output [31:0]bout;
+output [31:0]cout;
+output [31:0]dout;
+output [31:0]eout;
+output [31:0]fout;
+output [31:0]gout;
+output [31:0]hout;
+wire [31:0]majout;
+wire [31:0]ashift2;
+wire [31:0]ashift13;
+wire [31:0]ashift22;
+wire [31:0]eshift6;
+wire [31:0]eshift11;
+wire [31:0]eshift25;
+wire [31:0]suma;
+wire [31:0]sume;
+wire [31:0]sumfin;
+wire [31:0]chout;
+majority maj(ain,bin,cin,majout);
+shifter_x2 shft2(ain,ashift2);
+shifter_13 shft13(ain,ashift13);
+shifter_22 shft22(ain,ashift22);
+assign suma=ashift2^ashift13^ashift22;
+choosing ch(ein,fin,gin,chout);
+shifter_6 shft6(ein,eshift6);
+shifter_11 shft11(ein,eshift11);
+shifter_25 shft25(ein,eshift25);
+assign sume=eshift6^eshift11^eshift25;
+assign sumfin=w+k+hin+sume+chout;
+assign aout=suma+majout+sumfin;
+assign bout=ain;
+assign cout=bin;
+assign dout=cin;
+assign eout=din+sumfin;
+assign fout=ein;
+assign gout=fin;
+assign hout=gin;
+endmodule
+
+
+

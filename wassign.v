@@ -1,0 +1,24 @@
+module wassign(w1,w2,w3,w4,out);
+input [31:0]w1;
+input [31:0]w2;
+input [31:0]w3;
+input [31:0]w4;
+output [31:0]out;
+wire [31:0]w1_7;
+wire [31:0]w1_18;
+wire [31:0]w1_3;
+wire [31:0]w1_s0;
+wire [31:0]w2_17;
+wire [31:0]w2_19;
+wire [31:0]w2_10;
+wire [31:0]w2_s1;
+shifter_7 wa1_7(w1,w1_7);
+shifter_18 wa1_18(w1,w1_18);
+shifter_3 wa1_3(w1,w1_3);
+assign w1_s0= w1_7^w1_18^w1_3;
+shifter_17 wa2_17(w2,w2_17);
+shifter_19 wa2_19(w2,w2_19);
+shifter_10 wa2_10(w2,w2_10);
+assign w2_s1= w2_17^w2_19^w2_10;
+assign out= w3+w4+w1_s0+w2_s1;
+endmodule
